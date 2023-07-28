@@ -1,5 +1,5 @@
 <?php
-// ./actions/login_action.php
+session_start();
 
 // Read variables and create connection
 $mysql_servername = getenv("MYSQL_SERVERNAME");
@@ -13,6 +13,34 @@ if ($conn->connect_error) {
 	die("Connection failed: " . $conn->connect_error);
 }
 
-// TODO: Log the user in
+// Get the submitted form data
+$username = $_POST['username'];
+$password = $_POST['password'];
+
+// Check if username exists
+$sql = "SELECT * FROM users WHERE username=?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('s', $username);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows == 0) {
+    $_SESSION['error'] = 'Username does not exist.';
+    header('Location: ../views/login.php');
+    exit();
+}
+
+// Check password
+$user = $result->fetch_assoc();
+if (!password_verify($password, $user['password'])) {
+    $_SESSION['error'] = 'Invalid password.';
+    header('Location: ../views/login.php');
+    exit();
+}
+
+// Log the user in
+$_SESSION['logged_in'] = true;
+$_SESSION['username'] = $username;
+header('Location: ../index.php');
 
 ?>

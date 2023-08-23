@@ -1,3 +1,4 @@
+/* Write your CSS rules here */
 /* style.cs: BYU IT&C 210a Boilerplate Stylesheet */
 
 /* We use the Material Icons font in some of the styles. This brings in
@@ -62,10 +63,10 @@ nav {
 }
 
 nav a {
-  display: flex;
+  /*display: flex;*/
   justify-content: flex-end;
   align-items: center;
-  width: 100%;
+  width: auto;
   color: var(
     --primary-text
   ); /* Links in the nav bar are light blue instead of white */

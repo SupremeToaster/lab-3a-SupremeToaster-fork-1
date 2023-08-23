@@ -1,5 +1,5 @@
 <?php
-session_start();
+// ./actions/logout_action.php
 
 // Read variables and create connection
 $mysql_servername = getenv("MYSQL_SERVERNAME");
@@ -13,19 +13,21 @@ if ($conn->connect_error) {
 	die("Connection failed: " . $conn->connect_error);
 }
 
-// Unset all of the session variables
-$_SESSION = array();
+// TODO: Log the user out
+// Get session variables
+session_start();
 
-// If it's desired to kill the session, also delete the session cookie.
-if (ini_get("session.use_cookies")) {
-    $params = session_get_cookie_params();
-    setcookie(session_name(), '', time() - 42000,
-        $params["path"], $params["domain"],
-        $params["secure"], $params["httponly"]
-    );
-}
+// Update logged_in variable in the database
+$username = $_SESSION['username'];
+$query = "UPDATE users SET logged_in = false WHERE username = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $username);
+$stmt->execute();
 
-// Finally, destroy the session.
+// Destroy session
+session_unset();
 session_destroy();
-header('Location: ../views/login.php');
+
+// Redirect to login page
+header("Location: ../views/login.php");
 ?>

@@ -1,5 +1,5 @@
 <?php
-session_start();
+// ./actions/login_action.php
 
 // Read variables and create connection
 $mysql_servername = getenv("MYSQL_SERVERNAME");
@@ -13,34 +13,48 @@ if ($conn->connect_error) {
 	die("Connection failed: " . $conn->connect_error);
 }
 
-// Get the submitted form data
+// TODO: Log the user in
+// Get form data
 $username = $_POST['username'];
 $password = $_POST['password'];
 
 // Check if username exists
-$sql = "SELECT * FROM users WHERE username=?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param('s', $username);
+$query = "SELECT * FROM users WHERE username = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $username);
 $stmt->execute();
 $result = $stmt->get_result();
-
 if ($result->num_rows == 0) {
-    $_SESSION['error'] = 'Username does not exist.';
-    header('Location: ../views/login.php');
-    exit();
+    // Redirect with error
+    header("Location: ../views/login.php?error=username_not_found");
+    exit;
 }
 
-// Check password
+// Get user
 $user = $result->fetch_assoc();
+
+// Check if password is correct
 if (!password_verify($password, $user['password'])) {
-    $_SESSION['error'] = 'Invalid password.';
-    header('Location: ../views/login.php');
-    exit();
+	// Redirect with error
+	header("Location: ../views/login.php?error=incorrect_password");
+	exit;
 }
 
-// Log the user in
-$_SESSION['logged_in'] = true;
+// Set session variables
+session_start();
+$_SESSION['logged_in'] = 'yes';
 $_SESSION['username'] = $username;
-header('Location: ../index.php');
+$_SESSION['user_id'] = $user['id'];
+
+// Update logged_in variable in the database
+$query = "UPDATE users SET logged_in = true WHERE username = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $username);
+$stmt->execute();
+
+// Redirect to application
+header("Location: ../index.php");
+
+var_dump($password, $user['password']);
 
 ?>

@@ -20,5 +20,10 @@
     <input type="password" id="password" name="password" required>
     <br>
     <input type="submit" value="Login">
+    <div class="divider">
+        <div class="line"></div>
+        <span class="text">Your Text Here</span>
+        <div class="line"></div>
+    </div>
   </form>
 </body>

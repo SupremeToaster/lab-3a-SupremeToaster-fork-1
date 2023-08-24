@@ -248,3 +248,22 @@ input.toggle-switch:checked:after {
 .button-styled:hover {
   background-color: var(--checked); /* darker green on hover */
 }
+
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.line {
+  flex-grow: 1;
+  height: 1px;
+  background-color: #000;
+}
+
+.text {
+  background-color: #fff;
+  padding: 0 10px;
+  margin: 0 10px;
+}

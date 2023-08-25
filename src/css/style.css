@@ -16,8 +16,9 @@ to all elements unless they are overridden. */
   --primary-text: #1e1420;
   --background: #fffafa;
   /* Window background and default font */
-  background-color: lightgray;
+  background-color: var(--primary);
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  line-height: 1.75;
 }
 
 h1 {
@@ -30,22 +31,16 @@ form {
   padding: 20px;
   border-top-style: groove;
   border-top-width: 20px;
-  border-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 /* These rules with element selectors apply to all elements of the corresponding names. In a sense, they
 are automatically applied */
 
 body {
-  width: 100%;
-  max-width: 55rem; /* Keeps the page from overflowing on wide monitors */
-  margin: 0.5em auto; /* 0.5em is top and bottom margin. 'auto' for left and right centers the body on the page */
-  border: 1px solid black; /* Surround the content with a solid black border */
-  border-radius: 5px; /* Round the corners of the body section */
-  padding: 0.75rem; /* Padding goes between the borders and the internal content */
-  background-color: var(
-    --primary
-  ); /* Contrast the body background from the page background */
+  width: 90%;
+  margin: 1em auto;
 }
 
 h1 {
@@ -53,13 +48,19 @@ h1 {
   font-weight: bolder;
 }
 
+.navbar {
+  border-bottom-style: ridge;
+  border-bottom-width: 20px;
+}
+
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-radius: 5px; /* Round the corners of the body section */
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   background-color: var(--background);
-  padding: 0.75rem; /* Give the nav bar some internal padding */
+  padding: 0.75rem;
 }
 
 nav a {
@@ -261,3 +262,28 @@ input.toggle-switch:checked:after {
   height: 1px;
   background-color: #000;
 }
+
+.divider-explain {
+  font-size: x-small;
+  margin-left: 3px;
+  margin-right:3px;
+}
+
+.input-container {
+  display: flex; /* Use Flexbox for layout */
+  flex-direction: column; /* Display input fields in a column */
+  margin-bottom: 10px;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+}
+
+
+.input-row input {
+  flex: 1; /* Allow input to expand and fill remaining space */
+  border: 1px solid #ccc; /* Adding a border for demonstration */
+  padding: 5px; /* Adding padding for a cleaner look */
+}
+

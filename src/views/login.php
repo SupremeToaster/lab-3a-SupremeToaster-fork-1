@@ -11,14 +11,28 @@
 </head>
 
 <body>
-  <nav>Log in page</nav>
+  <nav>Simple To-Do - Log in page</nav>
   <form action="/actions/login_action.php" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
-    <br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-    <br>
+    <div class="input-container">
+      <div class="input-row">
+        <label for="username">Username:</label>
+      </div>
+      <div class="input-row">
+        <input type="text" class="input-row" placeholder="exampleNoEmailNeeded" id="username" name="username" required>
+      </div>
+      <div class="input-row">
+        <label for="password">Password:</label>
+      </div>
+      <div class="input-row">
+        <input type="password" class="input-row" placeholder="" id="password" name="password" required>
+      </div>
+    </div>
     <input type="submit" value="Login">
+    <div class="divider">
+      <div class="line"></div>
+        <span class="divider-explain">new to the site?</span>
+      <div class="line"></div>
+    </div>
+  <a href="register.php" class="button-styled">Create an account</a>
   </form>
 </body>

@@ -8,18 +8,35 @@
 </head>
 
 <body>
-  <nav>Register page</a></nav>
+  <nav>Simple To-Do - Register page</a></nav>
   <form action="/actions/register_action.php" method="post">  <!-- Modified part -->
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
-    <br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-    <br>
-    <label for="confirm_password">Confirm Password:</label>
-    <input type="password" id="confirm_password" name="confirm_password" required>
-    <br>
+  <div class="input-container">
+      <div class="input-row">
+        <label for="username">Username:</label>
+      </div>
+      <div class="input-row">
+        <input type="text" class="input-row" placeholder="exampleNoEmailNeeded" id="username" name="username" required>
+      </div>
+      <div class="input-row">
+        <label for="password">Password:</label>
+      </div>
+      <div class="input-row">
+        <input type="password" class="input-row" placeholder="" id="password" name="password" required>
+      </div>
+      <div class="input-row">
+        <label for="confirm_password">Confirm Password:</label>
+      </div>
+      <div class="input-row">
+        <input type="password" class="input-row" placeholder="" id="confirm_password" name="confirm_password" required>
+      </div>
+    </div>
     <input type="submit" value="Register">
+    <div class="divider">
+      <div class="line"></div>
+        <span class="divider-explain">have an account already?</span>
+      <div class="line"></div>
+    </div>
+  <a href="login.php" class="button-styled">Click to login</a>
   </form>
 </body>
 

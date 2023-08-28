@@ -33,7 +33,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== 'yes') {
       <!-- Other navigation links -->
     <a href="actions/logout_action.php">Log Out</a>
   </nav>
-  <h1>My To-Do List</h1>
+  <h1>My To-Do</h1>
   <input type="checkbox" class="toggle-switch" id="cb-sort" /><label for="cb-sort">Sort by date</label>
   <input type="checkbox" class="toggle-switch" id="cb-filter" /><label for="cb-filter">Filter completed tasks</label>
   <ul id="taskContainer" class="tasklist">

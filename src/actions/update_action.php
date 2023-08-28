@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db_connection.php';
+include '../db_connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $task_id = $_POST['task_id'];

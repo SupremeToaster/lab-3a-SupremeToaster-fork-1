@@ -10,6 +10,23 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== 'yes') {
 }
 ?>
 
+<?php
+session_start();
+include 'db_connection.php';
+
+$user_id = $_SESSION['user_id'];
+$sql = "SELECT * FROM tasks WHERE user_id = '$user_id'";
+$result = $conn->query($sql);
+
+while ($row = $result->fetch_assoc()) {
+    echoTask($row);
+}
+
+function echoTask($task) {
+    // Your HTML code to display each task
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

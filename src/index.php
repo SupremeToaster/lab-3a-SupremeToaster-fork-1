@@ -24,6 +24,11 @@ while ($row = $result->fetch_assoc()) {
 
 function echoTask($task) {
     // Your HTML code to display each task
+    <form class="form-create-task">
+    <input type="text" name="description" required class="my-input" /><br>
+    <input type="date" name="date" required class="my-input" /><br>
+    <button class="button-styled">Create Task</button><br>
+  </form>
 }
 ?>
 

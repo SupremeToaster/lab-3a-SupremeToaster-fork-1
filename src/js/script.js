@@ -1,5 +1,5 @@
 // script.js
-
+/*
 class Task {
   constructor({ text, date, done, id }) {
     // HINT This method is the constructor. In C++, this would be
@@ -162,3 +162,4 @@ document.getElementById("cb-filter").addEventListener("change", function () {
 });
 
 readAndDisplayTasks();
+*/

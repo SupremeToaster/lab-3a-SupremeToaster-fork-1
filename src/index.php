@@ -5,9 +5,6 @@ session_start();
 // Check if the user is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== 'yes') {
     // Redirect to login page if not logged in
-    // Redirect to login page if not logged in
-    // Redirect to login page if not logged in
-    // Redirect to login page if not logged in
     header("Location: views/login.php");
     exit;
 }
@@ -64,7 +61,7 @@ function echoTask($task) {
     <input type="text" name="description" required class="my-input" /><br>
     <input type="date" name="date" required class="my-input" /><br>
     <button class="button-styled">Create Task</button><br>
-    
+
   <!-- Links to scripts -->
 <?php
 function echoTask($task) {

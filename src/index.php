@@ -11,8 +11,11 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== 'yes') {
 include 'db_connection.php';
 
 $user_id = $_SESSION['user_id'];
-$sql = "SELECT * FROM tasks WHERE user_id = '$user_id'";
-$result = $conn->query($sql);
+$stmt = $conn->prepare("SELECT * FROM tasks WHERE user_id = ?");
+$stmt->bind_param("s", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
 
 function echoTask($task) {
     echo '<li>' . $task['text'] . ' - ' . $task['date'] . '</li>';

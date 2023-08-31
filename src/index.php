@@ -15,7 +15,7 @@ $sql = "SELECT * FROM tasks WHERE user_id = '$user_id'";
 $result = $conn->query($sql);
 
 function echoTask($task) {
-    echo '<li>' . $task['description'] . ' - ' . $task['date'] . '</li>';
+    echo '<li>' . $task['text'] . ' - ' . $task['date'] . '</li>';
 }
 ?>
 

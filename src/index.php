@@ -31,7 +31,9 @@ function echoTask($task) {
 
 <body>
   <nav class="navbar">
-    <a href="https://707d8d6bdb434516a0857a9cc637bec2.vfs.cloud9.us-west-1.amazonaws.com/_static/public_html/portfoliolab/home.html">My Resume</a>
+    <a
+      href="https://707d8d6bdb434516a0857a9cc637bec2.vfs.cloud9.us-west-1.amazonaws.com/_static/public_html/portfoliolab/home.html">My
+      Resume</a>
     <a href="actions/logout_action.php">Log Out</a>
   </nav>
   <h1>My To-Do List</h1>

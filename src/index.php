@@ -46,7 +46,7 @@ function echoTask($task) {
   <title>Lab-3A</title>
 </head>
 <body>
-  <h1>To-Do List</h1>
+  <nav class="navbar">
     <a href="https://707d8d6bdb434516a0857a9cc637bec2.vfs.cloud9.us-west-1.amazonaws.com/_static/public_html/portfoliolab/home.html">My Resume</a>
     <a href="actions/logout_action.php">Log Out</a>
   </nav>

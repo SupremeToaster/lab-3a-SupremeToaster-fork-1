@@ -4,12 +4,13 @@ include '../db_connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $task_id = $_POST['task_id'];
-    $sql = "DELETE FROM tasks WHERE id = '$task_id'";
+    $stmt = $conn->prepare("DELETE FROM tasks WHERE id = ?");
+    $stmt->bind_param("i", $task_id);
     
-    if ($conn->query($sql) === TRUE) {
-        header('Location: index.php');
+    if ($stmt->execute()) {
+        echo "Success";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Error: " . $stmt->error;
     }
 }
 ?>

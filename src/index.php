@@ -34,7 +34,6 @@ function echoTask($task) {
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <title>Lab-3A</title>
 </head>
 <body>
@@ -57,6 +56,5 @@ function echoTask($task) {
     <input type="date" name="date" required class="my-input" /><br>
     <button class="button-styled">Create Task</button><br>
   </form>
-  <script src="js/script.js"></script>
 </body>
 </html>

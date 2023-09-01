@@ -1,5 +1,3 @@
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <?php
 // Start session
 session_start();
@@ -29,7 +27,6 @@ function echoTask($task) {
   echo "<button type='button' class='task-delete material-icon' onclick='deleteTask({$task['id']})'>backspace</button>";
   echo "</li>";
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

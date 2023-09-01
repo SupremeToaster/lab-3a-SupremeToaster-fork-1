@@ -18,7 +18,6 @@ $result = $stmt->get_result();
 
 function echoTask($task) {
     $checkedStatus = $task['done'] ? "checked" : "";
-    $checkedClass = $task['done'] ? "task-checked" : "";
     echo "<li class='task'>";
     echo "<input type='checkbox' class='task-done checkbox-icon' $checkedStatus onclick='updateTask({$task['id']})' />";
     echo "<span class='task-description $checkedClass'>{$task['text']}</span>";

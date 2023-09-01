@@ -16,22 +16,18 @@ $stmt->bind_param("s", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
-
 function echoTask($task) {
     echo '<li>' . $task['text'] . ' - ' . $task['date'] . '</li>';
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="css/style.css">
   <title>Lab-3A</title>
 </head>
-
 <body>
   <nav class="navbar">
     <a
@@ -55,5 +51,4 @@ function echoTask($task) {
     <button class="button-styled">Create Task</button><br>
   </form>
 </body>
-
 </html>

@@ -15,7 +15,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== 'yes') {
 include 'db_connection.php';
 
 $user_id = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT * FROM tasks WHERE user_id = ? AND done = 0 ORDER BY date ASC");
+$stmt = $conn->prepare("SELECT * FROM tasks WHERE user_id = ? ORDER BY date ASC");
 $stmt->bind_param("s", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();

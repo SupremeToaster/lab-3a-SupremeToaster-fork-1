@@ -11,9 +11,13 @@ function updateTask(taskId) {
     const taskElement = $("#task-" + taskId);
     const descriptionElement = taskElement.find(".task-description");
     
-    // Toggle the 'task-checked' class
-    descriptionElement.toggleClass("task-checked");
-  });
+    if (data.success) {
+      // Toggle the 'task-checked' class
+      descriptionElement.toggleClass("task-checked");
+    } else {
+      console.error("Failed to update task:", data.error);
+    }
+  }, "json");  // Expect a JSON response
 }
 
 

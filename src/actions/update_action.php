@@ -7,9 +7,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sql = "UPDATE tasks SET done = !done WHERE id = '$task_id'";
     
     if ($conn->query($sql) === TRUE) {
-        header('Location: index.php');
+        echo json_encode(["success" => true]);
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo json_encode(["success" => false, "error" => $conn->error]);
     }
+    exit;  // Important: exit the script to prevent further output
 }
 ?>

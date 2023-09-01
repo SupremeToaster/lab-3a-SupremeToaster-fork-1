@@ -19,12 +19,11 @@ $result = $stmt->get_result();
 function echoTask($task) {
     $checkedStatus = $task['done'] ? "checked" : "";
     $checkedClass = $task['done'] ? "task-checked" : "";
-    
-    echo "<li class='task' id='task-{$task['id']}'>";
+    echo "<li class='task'>";
     echo "<input type='checkbox' class='task-done checkbox-icon' $checkedStatus onclick='updateTask({$task['id']})' />";
     echo "<span class='task-description $checkedClass'>{$task['text']}</span>";
     echo "<span class='class-date'>{$task['date']}</span>";
-    echo "<button type='button' class='task-delete material-icon' onclick='deleteTask({$task['id']})'>backspace</button>";
+    echo "<button class='task-delete material-icon' onclick='deleteTask({$task['id']})'>backspace</button>";
     echo "</li>";
 }
 ?>

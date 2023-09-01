@@ -1,3 +1,5 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <?php
 // Start session
 session_start();
@@ -17,14 +19,17 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 function echoTask($task) {
-    $checkedStatus = $task['done'] ? "checked" : "";
-    echo "<li class='task'>";
-    echo "<input type='checkbox' class='task-done checkbox-icon' $checkedStatus onclick='updateTask({$task['id']})' />";
-    echo "<span class='task-description $checkedClass'>{$task['text']}</span>";
-    echo "<span class='class-date'>{$task['date']}</span>";
-    echo "<button class='task-delete material-icon' onclick='deleteTask({$task['id']})'>backspace</button>";
-    echo "</li>";
+  $checkedStatus = $task['done'] ? "checked" : "";
+  $checkedClass = $task['done'] ? "task-checked" : "";
+  
+  echo "<li class='task' id='task-{$task['id']}'>";
+  echo "<input type='checkbox' class='task-done checkbox-icon' $checkedStatus onclick='updateTask({$task['id']})' />";
+  echo "<span class='task-description $checkedClass'>{$task['text']}</span>";
+  echo "<span class='class-date'>{$task['date']}</span>";
+  echo "<button type='button' class='task-delete material-icon' onclick='deleteTask({$task['id']})'>backspace</button>";
+  echo "</li>";
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,5 +59,6 @@ function echoTask($task) {
     <input type="date" name="date" required class="my-input" /><br>
     <button class="button-styled">Create Task</button><br>
   </form>
+  <script src="js/script.js"></script>
 </body>
 </html>

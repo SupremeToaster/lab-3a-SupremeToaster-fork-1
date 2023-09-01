@@ -1,4 +1,12 @@
 // script.js
+function deleteTask(taskId) {
+  $.post("actions/delete_action.php", { task_id: taskId }, function(data) {
+    // Remove the deleted task from the DOM or refresh the task list
+    $("#task-" + taskId).remove();
+  });
+}
+
+
 /*
 class Task {
   constructor({ text, date, done, id }) {

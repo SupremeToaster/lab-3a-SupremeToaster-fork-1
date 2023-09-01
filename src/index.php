@@ -17,7 +17,14 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 function echoTask($task) {
-    echo '<li>' . $task['text'] . ' - ' . $task['date'] . '</li>';
+    $checkedStatus = $task['done'] ? "checked" : "";
+    $checkedClass = $task['done'] ? "task-checked" : "";
+    echo "<li class='task'>";
+    echo "<input type='checkbox' class='task-done checkbox-icon' $checkedStatus onclick='updateTask({$task['id']})' />";
+    echo "<span class='task-description $checkedClass'>{$task['text']}</span>";
+    echo "<span class='class-date'>{$task['date']}</span>";
+    echo "<button class='task-delete material-icon' onclick='deleteTask({$task['id']})'>backspace</button>";
+    echo "</li>";
 }
 ?>
 <!DOCTYPE html>
@@ -30,9 +37,7 @@ function echoTask($task) {
 </head>
 <body>
   <nav class="navbar">
-    <a
-      href="https://707d8d6bdb434516a0857a9cc637bec2.vfs.cloud9.us-west-1.amazonaws.com/_static/public_html/portfoliolab/home.html">My
-      Resume</a>
+    <a href="https://707d8d6bdb434516a0857a9cc637bec2.vfs.cloud9.us-west-1.amazonaws.com/_static/public_html/portfoliolab/home.html">My Resume</a>
     <a href="actions/logout_action.php">Log Out</a>
   </nav>
   <h1>My To-Do List</h1>

@@ -20,7 +20,6 @@ function updateTask(taskId) {
   }, "json");  // Expect a JSON response
 }
 
-
 /*
 class Task {
   constructor({ text, date, done, id }) {

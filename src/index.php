@@ -15,7 +15,11 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== 'yes') {
 include 'db_connection.php';
 
 $user_id = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT * FROM tasks WHERE user_id = ?");
+$stmt = $conn->prepare("SELECT * FROM tasks WHERE user_id = ? AND done = 0 ORDER BY date ASC");
+$stmt->bind_param("s", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
 // Debugging: Log the number of tasks fetched
 //error_log("Debug: Number of tasks fetched: " . $result->num_rows);
 
@@ -42,7 +46,7 @@ function echoTask($task) {
   <title>Lab-3A</title>
 </head>
 <body>
-  <nav class="navbar">
+  <h1>To-Do List</h1>
     <a href="https://707d8d6bdb434516a0857a9cc637bec2.vfs.cloud9.us-west-1.amazonaws.com/_static/public_html/portfoliolab/home.html">My Resume</a>
     <a href="actions/logout_action.php">Log Out</a>
   </nav>

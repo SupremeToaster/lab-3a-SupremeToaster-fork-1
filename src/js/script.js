@@ -6,6 +6,16 @@ function deleteTask(taskId) {
   });
 }
 
+function updateTask(taskId) {
+  $.post("actions/update_action.php", { task_id: taskId }, function(data) {
+    const taskElement = $("#task-" + taskId);
+    const descriptionElement = taskElement.find(".task-description");
+    
+    // Toggle the 'task-checked' class
+    descriptionElement.toggleClass("task-checked");
+  });
+}
+
 
 /*
 class Task {

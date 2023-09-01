@@ -16,6 +16,10 @@ include 'db_connection.php';
 
 $user_id = $_SESSION['user_id'];
 $stmt = $conn->prepare("SELECT * FROM tasks WHERE user_id = ? AND done = 0 ORDER BY date ASC");
+$stmt->bind_param("s", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
 // Debugging: Log the number of tasks fetched
 //error_log("Debug: Number of tasks fetched: " . $result->num_rows);
 

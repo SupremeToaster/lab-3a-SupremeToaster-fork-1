@@ -2,6 +2,10 @@
 // Start session
 session_start();
 
+// Debugging: Log session variables
+//error_log("Debug: Session logged_in: " . $_SESSION['logged_in']);
+//error_log("Debug: Session user_id: " . $_SESSION['user_id']);
+
 // Check if the user is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== 'yes') {
     header("Location: views/login.php");
@@ -15,6 +19,10 @@ $stmt = $conn->prepare("SELECT * FROM tasks WHERE user_id = ?");
 $stmt->bind_param("s", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
+
+// Debugging: Log the number of tasks fetched
+//error_log("Debug: Number of tasks fetched: " . $result->num_rows);
+
 
 function echoTask($task) {
     $checkedStatus = $task['done'] ? "checked" : "";
@@ -53,7 +61,7 @@ function echoTask($task) {
     ?>
   </ul>
   <form class="form-create-task" action="actions/create_action.php" method="post">
-    <input type="text" name="description" required class="my-input" /><br>
+    <input type="text" name="text" required class="my-input" /><br>
     <input type="date" name="date" required class="my-input" /><br>
     <button class="button-styled">Create Task</button><br>
   </form>

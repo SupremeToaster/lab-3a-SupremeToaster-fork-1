@@ -7,12 +7,12 @@ include 'actions/db_connection.php';  // Adjust the path as needed
 
 // Your PHP code for adding a new task
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $description = $_POST['description'];
+    $tasks = $_POST['tasks'];
     $date = $_POST['date'];
     $user_id = $_SESSION['user_id'];
 
-    $stmt = $conn->prepare("INSERT INTO tasks (description, date, user_id) VALUES (:description, :date, :user_id)");
-    $stmt->bindParam(':description', $description, PDO::PARAM_STR);
+    $stmt = $conn->prepare("INSERT INTO tasks (tasks, date, user_id) VALUES (:tasks, :date, :user_id)");
+    $stmt->bindParam(':tasks', $tasks, PDO::PARAM_STR);
     $stmt->bindParam(':date', $date, PDO::PARAM_STR);
     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 
@@ -54,7 +54,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php
     if (isset($result) && is_array($result) && count($result) > 0) {
         foreach ($result as $row) {
-            echo "<li>" . $row['description'] . " - " . $row['date'] . "</li>";
+            echo "<li>" . $row['tasks'] . " - " . $row['date'] . "</li>";
         }
     } else {
         echo "<li>No tasks found.</li>";

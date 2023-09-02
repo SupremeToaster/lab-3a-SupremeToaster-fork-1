@@ -16,7 +16,7 @@ class Task {
     const html = `
     <li class="task">
         <input type="checkbox" class="task-done checkbox-icon" ${checkedStatus} />
-        <span class="tasks ${checkedClass}"></span>
+        <span class="text ${checkedClass}"></span>
         <span class="class-date">${prettyDate}</span>
         <button class="task-delete material-icon">backspace</button>
     </li>

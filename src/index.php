@@ -7,12 +7,12 @@ include 'actions/db_connection.php';  // Adjust the path as needed
 
 // Your PHP code for adding a new task
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $tasks = $_POST['tasks'];
+    $text = $_POST['text'];
     $date = $_POST['date'];
     $user_id = $_SESSION['user_id'];
 
-    $stmt = $conn->prepare("INSERT INTO tasks (tasks, date, user_id) VALUES (:tasks, :date, :user_id)");
-    $stmt->bindParam(':tasks', $tasks, PDO::PARAM_STR);
+    $stmt = $conn->prepare("INSERT INTO text (text, date, user_id) VALUES (:text, :date, :user_id)");
+    $stmt->bindParam(':text', $text, PDO::PARAM_STR);
     $stmt->bindParam(':date', $date, PDO::PARAM_STR);
     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Fetch tasks from the database
 $user_id = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT * FROM tasks WHERE user_id = :user_id");
+$stmt = $conn->prepare("SELECT * FROM text WHERE user_id = :user_id");
 $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -54,15 +54,15 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php
     if (isset($result) && is_array($result) && count($result) > 0) {
         foreach ($result as $row) {
-            echo "<li>" . $row['tasks'] . " - " . $row['date'] . "</li>";
+            echo "<li>" . $row['text'] . " - " . $row['date'] . "</li>";
         }
     } else {
         echo "<li>No tasks found.</li>";
     }
     ?>
-  </ul>
+</ul>
   <form class="form-create-task" action="actions/create_action.php" method="post">
-    <input type="text" name="tasks" required class="my-input" /><br>
+    <input type="text" name="text" required class="my-input" /><br>
     <input type="date" name="date" required class="my-input" /><br>
     <button class="button-styled">Create Task</button><br>
   </form>

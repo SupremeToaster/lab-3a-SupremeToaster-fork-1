@@ -7,8 +7,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $date = $_POST['date'];
     $user_id = $_SESSION['user_id']; // Assuming user_id is stored in session
 
-    $stmt = $conn->prepare("INSERT INTO text (text, date, user_id) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $text, $date, $user_id);
+    $stmt = $conn->prepare("INSERT INTO tasks (text, date, user_id) VALUES (:text, :date, :user_id)");
+    $stmt->bindParam(':text', $text, PDO::PARAM_STR);
+    $stmt->bindParam(':date', $date, PDO::PARAM_STR);
+    $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     $stmt->execute();
 
     header("Location: index.php");

@@ -39,5 +39,4 @@ class Task {
 // Removed form submission and local storage logic
 // Removed task creation, read, update, and delete logic
 // Removed event listeners for form fields
-
 // You can keep utility functions if needed

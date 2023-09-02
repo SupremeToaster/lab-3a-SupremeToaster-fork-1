@@ -12,10 +12,10 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== 'yes') {
 include 'db_connection.php'; // Assume you have a db_connection.php file
 
 $user_id = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT * FROM tasks WHERE user_id = ?");
-$stmt->bind_param("s", $user_id);
+$stmt = $conn->prepare("SELECT * FROM tasks WHERE user_id = :user_id");
+$stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
 $stmt->execute();
-$result = $stmt->get_result();
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -38,8 +38,8 @@ $result = $stmt->get_result();
   <input type="checkbox" class="toggle-switch" id="cb-filter" /><label for="cb-filter">Filter completed tasks</label>
   <ul id="taskContainer" class="tasklist">
     <?php
-    while ($row = $result->fetch_assoc()) {
-        echo "<li>" . $row['tasks'] . " - " . $row['date'] . "</li>";
+    foreach ($result as $row) {
+        echo "<li>" . $row['description'] . " - " . $row['date'] . "</li>";
     }
     ?>
   </ul>

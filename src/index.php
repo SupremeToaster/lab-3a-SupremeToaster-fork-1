@@ -2,21 +2,35 @@
 // Start session
 session_start();
 
-// Check if the user is logged in
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== 'yes') {
-    // Redirect to login page if not logged in
-    header("Location: views/login.php");
-    exit;
+// Include the database connection file
+include 'actions/db_connection.php';  // Adjust the path as needed
+
+// Your PHP code for adding a new task
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $description = $_POST['description'];
+    $date = $_POST['date'];
+    $user_id = $_SESSION['user_id'];
+
+    $stmt = $conn->prepare("INSERT INTO tasks (description, date, user_id) VALUES (:description, :date, :user_id)");
+    $stmt->bindParam(':description', $description, PDO::PARAM_STR);
+    $stmt->bindParam(':date', $date, PDO::PARAM_STR);
+    $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+
+    if ($stmt->execute()) {
+        header("Location: ../index.php");
+    } else {
+        echo "Error: Could not execute the query.";
+    }
 }
 
-include 'db_connection.php'; // Assume you have a db_connection.php file
-
+// Fetch tasks from the database
 $user_id = $_SESSION['user_id'];
 $stmt = $conn->prepare("SELECT * FROM tasks WHERE user_id = :user_id");
-$stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+$stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -38,8 +52,12 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <input type="checkbox" class="toggle-switch" id="cb-filter" /><label for="cb-filter">Filter completed tasks</label>
   <ul id="taskContainer" class="tasklist">
     <?php
-    foreach ($result as $row) {
-        echo "<li>" . $row['description'] . " - " . $row['date'] . "</li>";
+    if (isset($result) && is_array($result) && count($result) > 0) {
+        foreach ($result as $row) {
+            echo "<li>" . $row['description'] . " - " . $row['date'] . "</li>";
+        }
+    } else {
+        echo "<li>No tasks found.</li>";
     }
     ?>
   </ul>

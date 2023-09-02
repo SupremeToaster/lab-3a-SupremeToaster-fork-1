@@ -6,22 +6,20 @@ session_start();
 include 'actions/db_connection.php';  // Adjust the path as needed
 
 // Your PHP code for adding a new task
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $text = $_POST['text'];
-    $date = $_POST['date'];
-    $user_id = $_SESSION['user_id'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $text = $_POST['text'];
+  $date = $_POST['date'];
+  $user_id = $_SESSION['user_id']; // Assuming user_id is stored in session
+  $done = 0; // Initialize the 'done' field with a default value of 0
 
-    $stmt = $conn->prepare("INSERT INTO tasks (text, date, user_id, done) VALUES (:text, :date, :user_id, :done)");
-    $stmt->bindParam(':text', $text, PDO::PARAM_STR);
-    $stmt->bindParam(':date', $date, PDO::PARAM_STR);
-    $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-    $stmt->bindParam(':done', $done, PDO::PARAM_INT);  // Assuming $done is a variable holding the value for 'done'
+  $stmt = $conn->prepare("INSERT INTO tasks (text, date, user_id, done) VALUES (:text, :date, :user_id, :done)");
+  $stmt->bindParam(':text', $text, PDO::PARAM_STR);
+  $stmt->bindParam(':date', $date, PDO::PARAM_STR);
+  $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+  $stmt->bindParam(':done', $done, PDO::PARAM_INT); // Bind the 'done' field
+  $stmt->execute();
 
-    if ($stmt->execute()) {
-        header("Location: ../index.php");
-    } else {
-        echo "Error: Could not execute the query.";
-    }
+  header("Location: index.php");
 }
 
 // Fetch tasks from the database

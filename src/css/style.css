@@ -280,10 +280,8 @@ input.toggle-switch:checked:after {
   align-items: center;
 }
 
-
 .input-row input {
   flex: 1; /* Allow input to expand and fill remaining space */
   border: 1px solid #ccc; /* Adding a border for demonstration */
   padding: 5px; /* Adding padding for a cleaner look */
 }
-

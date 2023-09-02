@@ -1,16 +1,15 @@
 <?php
 session_start();
-include '../db_connection.php';
+include 'db_connection.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $task_id = $_POST['task_id'];
-    $sql = "UPDATE tasks SET done = !done WHERE id = '$task_id'";
-    
-    if ($conn->query($sql) === TRUE) {
-        echo json_encode(["success" => true]);
-    } else {
-        echo json_encode(["success" => false, "error" => $conn->error]);
-    }
-    exit;  // Important: exit the script to prevent further output
+    $done = $_POST['done'];
+
+    $stmt = $conn->prepare("UPDATE tasks SET done = ? WHERE id = ?");
+    $stmt->bind_param("ss", $done, $task_id);
+    $stmt->execute();
+
+    header("Location: index.php");
 }
 ?>

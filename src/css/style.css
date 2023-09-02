@@ -101,7 +101,7 @@ nav a:hover {
   /* Add property to change checkbox icon color */
 }
 
-.task-description {
+.tasks {
   display: inline-block;
   width: calc(100% - 12em);
   box-sizing: border-box;
@@ -266,7 +266,7 @@ input.toggle-switch:checked:after {
 .divider-explain {
   font-size: x-small;
   margin-left: 3px;
-  margin-right:3px;
+  margin-right: 3px;
 }
 
 .input-container {

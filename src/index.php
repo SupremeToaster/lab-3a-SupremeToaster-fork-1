@@ -73,14 +73,14 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
            // Update form
            echo "<form action='actions/update_action.php' method='post'>";
-           echo "<input type='checkbox' class='task-done checkbox-icon' name='done' $checkedStatus />";
+           echo "<input type='checkbox' class='task-done checkbox-icon' name='done' $checkedStatus onclick='this.form.submit()' />";
            echo "<input type='hidden' name='task_id' value='" . $row['id'] . "' />";
            echo "<span class='task-description $checkedClass'>" . $row['text'] . "</span>";
-           echo "<span class='task-date'>$prettyDate</span>";
            echo "</form>";
 
            // Delete form
            echo "<form action='actions/delete_action.php' method='post'>";
+           echo "<span class='task-date'>$prettyDate</span>";
            echo "<input type='hidden' name='task_id' value='" . $row['id'] . "' />";
            echo "<button type='submit' class='task-delete material-icon'>backspace</button>";
            echo "</form>";

@@ -4,6 +4,7 @@ include 'db_connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $task_id = $_POST['task_id'];
+    $done = isset($_POST['done']) ? 1 : 0;
 
     $stmt = $conn->prepare("UPDATE tasks SET done = :done WHERE id = :task_id");
     $stmt->bindParam(':done', $done, PDO::PARAM_INT);

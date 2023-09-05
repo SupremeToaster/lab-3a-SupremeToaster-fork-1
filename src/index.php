@@ -42,14 +42,13 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <form action="index.php" method="get">
   <input type="checkbox" class="toggle-switch" id="cb-sort" name="sort" <?php if (isset($_GET['sort'])) echo 'checked'; ?> onchange="this.form.submit()" />
   <label for="cb-sort">Sort by date</label>
+
+  <input type="checkbox" class="toggle-switch" id="cb-filter" name="filter" <?php if (isset($_GET['filter'])) echo 'checked'; ?> onchange="this.form.submit()" />
+  <label for="cb-filter">Filter completed tasks</label>
+
   <button type="submit" style="display:none;"></button>
   </form>
 
-  <form action="index.php" method="get">
-  <input type="checkbox" class="toggle-switch" id="cb-filter" name="filter" <?php if (isset($_GET['filter'])) echo 'checked'; ?> onchange="this.form.submit()" />
-  <label for="cb-filter">Filter completed tasks</label>
-  <button type="submit" style="display:none;"></button>
-  </form>  <ul id="taskContainer" class="tasklist">
 
   <?php
      if (isset($result) && is_array($result) && count($result) > 0) {

@@ -9,8 +9,9 @@ include 'actions/db_connection.php';  // Adjust the path as needed
 $user_id = $_SESSION['user_id'];
 $sortQuery = isset($_GET['sort']) ? "ORDER BY date ASC" : "";
 $query = "SELECT * FROM tasks WHERE user_id = :user_id $sortQuery";
-$stmt = $conn->prepare($query);
-$stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+$stmt = $conn->prepare("UPDATE tasks SET done = :done WHERE id = :task_id");
+$stmt->bindParam(':done', $done, PDO::PARAM_INT);
+$stmt->bindParam(':task_id', $task_id, PDO::PARAM_INT);
 $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>

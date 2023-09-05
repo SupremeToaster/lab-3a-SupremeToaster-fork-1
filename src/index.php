@@ -33,7 +33,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
   </nav>
   <h1>My To-Do List</h1>
   <form action="index.php" method="get">
-  <input type="checkbox" class="toggle-switch" id="cb-sort" name="sort" <?php if (isset($_GET['sort'])) echo 'checked'; ?> />
+  <input type="checkbox" class="toggle-switch" id="cb-sort" name="sort" <?php if (isset($_GET['sort'])) echo 'checked'; ?> onchange="this.form.submit()" />
   <label for="cb-sort">Sort by date</label>
   <button type="submit" style="display:none;"></button>
   </form>

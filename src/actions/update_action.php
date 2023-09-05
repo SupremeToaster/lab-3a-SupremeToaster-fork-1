@@ -4,12 +4,12 @@ include 'db_connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $task_id = $_POST['task_id'];
-    $done = $_POST['done'];
+    $done = isset($_POST['done']) ? 1 : 0;
 
-    $stmt = $conn->prepare("UPDATE text SET done = ? WHERE id = ?");
-    $stmt->bind_param("ss", $done, $task_id);
+    $stmt = $conn->prepare("UPDATE tasks SET done = ? WHERE id = ?");
+    $stmt->bind_param("ii", $done, $task_id);
     $stmt->execute();
 
-    header("Location: index.php");
+    header("Location: ../index.php");
 }
 ?>

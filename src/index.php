@@ -6,17 +6,27 @@ session_start();
 include 'actions/db_connection.php';  // Adjust the path as needed
 
 // Fetch tasks from the database
-$user_id = $_SESSION['user_id'];
+// Initialize the WHERE clauses and sorting
+$whereClauses = ["user_id = :user_id"];
 $sortQuery = isset($_GET['sort']) ? "ORDER BY date ASC" : "";
-$filterQuery = "";
+
+// Add filter condition if the filter checkbox is checked
 if (isset($_GET['filter'])) {
-  $filterQuery = "AND done = 0";
+    $whereClauses[] = "done = 0";
 }
 
-$query = "SELECT * FROM tasks WHERE user_id = :user_id $sortQuery $filterQuery";
+// Construct the WHERE clause
+$whereClause = implode(' AND ', $whereClauses);
+
+// Construct the final SQL query
+$query = "SELECT * FROM tasks WHERE $whereClause $sortQuery";
+
+// Prepare and execute the SQL query
 $stmt = $conn->prepare($query);
-$stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+$stmt->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
 $stmt->execute();
+
+// Fetch the results
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>

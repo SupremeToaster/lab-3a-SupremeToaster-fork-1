@@ -51,6 +51,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
   <?php
+    // Display the tasks
+    echo "<ul class='task-list'>";
      if (isset($result) && is_array($result) && count($result) > 0) {
        foreach ($result as $row) {
            $checkedStatus = $row['done'] ? "checked" : "";
@@ -78,6 +80,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
       } else {
            echo "<li>No tasks found.</li>";
       }
+    echo "</ul>";
     ?>
 </ul>
   <form class="form-create-task" action="actions/create_action.php" method="post">

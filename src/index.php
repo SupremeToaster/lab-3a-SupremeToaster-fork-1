@@ -8,11 +8,17 @@ include 'actions/db_connection.php';  // Adjust the path as needed
 // Fetch tasks from the database
 $user_id = $_SESSION['user_id'];
 $sortQuery = isset($_GET['sort']) ? "ORDER BY date ASC" : "";
-$query = "SELECT * FROM tasks WHERE user_id = :user_id $sortQuery";
+$filterQuery = "";
+if (isset($_GET['filter'])) {
+  $filterQuery = "AND done = 0";
+}
+
+$query = "SELECT * FROM tasks WHERE user_id = :user_id $sortQuery $filterQuery";
 $stmt = $conn->prepare($query);
 $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 
@@ -32,34 +38,46 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <a href="actions/logout_action.php">Log Out</a>
   </nav>
   <h1>My To-Do List</h1>
+
   <form action="index.php" method="get">
   <input type="checkbox" class="toggle-switch" id="cb-sort" name="sort" <?php if (isset($_GET['sort'])) echo 'checked'; ?> onchange="this.form.submit()" />
   <label for="cb-sort">Sort by date</label>
   <button type="submit" style="display:none;"></button>
   </form>
-  <input type="checkbox" class="toggle-switch" id="cb-filter" /><label for="cb-filter">Filter completed tasks</label>
-  <ul id="taskContainer" class="tasklist">
-    <?php
-      if (isset($result) && is_array($result) && count($result) > 0) {
-        foreach ($result as $row) {
-            $checkedStatus = $row['done'] ? "checked" : "";
-            $checkedClass = $row['done'] ? "task-checked" : "";
-            $prettyDate = date("Y-m-d", strtotime($row['date']));
-            echo "<form action='actions/update_action.php' method='post'>";
-            echo "<input type='checkbox' class='task-done checkbox-icon' name='done' $checkedStatus />";
-            echo "<input type='hidden' name='task_id' value='" . $row['id'] . "' />";
-            echo "<span class='task-description $checkedClass'>" . $row['text'] . "</span>";
-            echo "<span class='task-date'>$prettyDate</span>";
-            
-            echo "<form action='actions/delete_action.php' method='post'>";
-            echo "<input type='hidden' name='task_id' value='" . $row['id'] . "' />";
-            echo "<button type='submit' class='task-delete material-icon'>backspace</button>";
-            echo "</form>";
-            
-            echo "</li>";
+
+  <form action="index.php" method="get">
+  <input type="checkbox" class="toggle-switch" id="cb-filter" name="filter" <?php if (isset($_GET['filter'])) echo 'checked'; ?> onchange="this.form.submit()" />
+  <label for="cb-filter">Filter completed tasks</label>
+  <button type="submit" style="display:none;"></button>
+  </form>  <ul id="taskContainer" class="tasklist">
+
+  <?php
+     if (isset($result) && is_array($result) && count($result) > 0) {
+       foreach ($result as $row) {
+           $checkedStatus = $row['done'] ? "checked" : "";
+           $checkedClass = $row['done'] ? "task-checked" : "";
+           $prettyDate = date("Y-m-d", strtotime($row['date']));
+
+           echo "<li class='task'>";
+
+           // Update form
+           echo "<form action='actions/update_action.php' method='post'>";
+           echo "<input type='checkbox' class='task-done checkbox-icon' name='done' $checkedStatus />";
+           echo "<input type='hidden' name='task_id' value='" . $row['id'] . "' />";
+           echo "<span class='task-description $checkedClass'>" . $row['text'] . "</span>";
+           echo "<span class='task-date'>$prettyDate</span>";
+           echo "</form>";
+
+           // Delete form
+           echo "<form action='actions/delete_action.php' method='post'>";
+           echo "<input type='hidden' name='task_id' value='" . $row['id'] . "' />";
+           echo "<button type='submit' class='task-delete material-icon'>backspace</button>";
+           echo "</form>";
+
+           echo "</li>";
         }
       } else {
-        echo "<li>No tasks found.</li>";
+           echo "<li>No tasks found.</li>";
       }
     ?>
 </ul>

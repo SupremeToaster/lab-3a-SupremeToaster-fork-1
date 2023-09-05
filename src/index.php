@@ -57,40 +57,43 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <label for="cb-filter">Filter completed tasks</label>
 
   <button type="submit" style="display:none;"></button>
+  
   </form>
   <?php
     // Display the tasks
     echo "<ul class='task-list'>";
-     if (isset($result) && is_array($result) && count($result) > 0) {
-       foreach ($result as $row) {
-           $checkedStatus = $row['done'] ? "checked" : "";
-           $checkedClass = $row['done'] ? "task-checked" : "";
-           $prettyDate = date("Y-m-d", strtotime($row['date']));
+    if (isset($result) && is_array($result) && count($result) > 0) {
+        foreach ($result as $row) {
+            $checkedStatus = $row['done'] ? "checked" : "";
+            $checkedClass = $row['done'] ? "task-checked" : "";
+            $prettyDate = date("Y-m-d", strtotime($row['date']));
 
-           echo "<li class='task'>";
+            echo "<li class='task'>";
+            echo "<div class='task-row'>";  // New div for inline forms
 
-           // Update form
-           echo "<form action='actions/update_action.php' method='post'>";
-           echo "<input type='checkbox' class='task-done checkbox-icon' name='done' $checkedStatus onclick='this.form.submit()' />";
-           echo "<input type='hidden' name='task_id' value='" . $row['id'] . "' />";
-           echo "<span class='task-description $checkedClass'>" . $row['text'] . "</span>";
-           echo "</form>";
+            // Update form
+            echo "<form class='task-update-form' action='actions/update_action.php' method='post'>";
+            echo "<input type='checkbox' class='task-done checkbox-icon' name='done' $checkedStatus onclick='this.form.submit()' />";
+            echo "<input type='hidden' name='task_id' value='" . $row['id'] . "' />";
+            echo "<span class='task-description $checkedClass'>" . $row['text'] . "</span>";
+            echo "</form>";
 
-           // Delete form
-           echo "<form action='actions/delete_action.php' method='post'>";
-           echo "<span class='task-date'>$prettyDate</span>";
-           echo "<input type='hidden' name='task_id' value='" . $row['id'] . "' />";
-           echo "<button type='submit' class='task-delete material-icon'>backspace</button>";
-           echo "</form>";
+            // Delete form
+            echo "<form class='task-delete-form' action='actions/delete_action.php' method='post'>";
+            echo "<span class='task-date'>$prettyDate</span>";
+            echo "<input type='hidden' name='task_id' value='" . $row['id'] . "' />";
+            echo "<button type='submit' class='task-delete material-icon'>backspace</button>";
+            echo "</form>";
 
-           echo "</li>";
+            echo "</div>";  // Close div for inline forms
+            echo "</li>";
         }
-      } else {
-           echo "<li>No tasks found.</li>";
-      }
+    } else {
+        echo "<li>No tasks found.</li>";
+    }
     echo "</ul>";
-    ?>
-</ul>
+  ?>
+
   <form class="form-create-task" action="actions/create_action.php" method="post">
     <input type="text" name="text" required class="my-input" /><br>
     <input type="date" name="date" required class="my-input" /><br>

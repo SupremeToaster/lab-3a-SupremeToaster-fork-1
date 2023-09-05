@@ -285,3 +285,17 @@ input.toggle-switch:checked:after {
   border: 1px solid #ccc; /* Adding a border for demonstration */
   padding: 5px; /* Adding padding for a cleaner look */
 }
+
+.task-row {
+  display: flex;
+  align-items: center;
+}
+
+.task-update-form,
+.task-delete-form {
+  display: inline-block;
+}
+
+.task-update-form {
+  flex-grow: 1;
+}

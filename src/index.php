@@ -5,23 +5,6 @@ session_start();
 // Include the database connection file
 include 'actions/db_connection.php';  // Adjust the path as needed
 
-// Your PHP code for adding a new task
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $text = $_POST['text'];
-  $date = $_POST['date'];
-  $user_id = $_SESSION['user_id']; // Assuming user_id is stored in session
-  $done = 0; // Initialize the 'done' field with a default value of 0
-
-  $stmt = $conn->prepare("INSERT INTO tasks (text, date, user_id, done) VALUES (:text, :date, :user_id, :done)");
-  $stmt->bindParam(':text', $text, PDO::PARAM_STR);
-  $stmt->bindParam(':date', $date, PDO::PARAM_STR);
-  $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-  $stmt->bindParam(':done', $done, PDO::PARAM_INT); // Bind the 'done' field
-  $stmt->execute();
-
-  header("Location: index.php");
-}
-
 // Fetch tasks from the database
 $user_id = $_SESSION['user_id'];
 $stmt = $conn->prepare("SELECT * FROM tasks WHERE user_id = :user_id");
@@ -51,13 +34,24 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <input type="checkbox" class="toggle-switch" id="cb-filter" /><label for="cb-filter">Filter completed tasks</label>
   <ul id="taskContainer" class="tasklist">
     <?php
-    if (isset($result) && is_array($result) && count($result) > 0) {
+      if (isset($result) && is_array($result) && count($result) > 0) {
         foreach ($result as $row) {
-            echo "<li>" . $row['text'] . " - " . $row['date'] . "</li>";
+            $checkedStatus = $row['done'] ? "checked" : "";
+            $checkedClass = $row['done'] ? "task-checked" : "";
+            $prettyDate = date("Y-m-d", strtotime($row['date']));
+            echo "<form action='actions/update_action.php' method='post'>";
+            echo "<li class='task'>";
+            echo "<input type='checkbox' class='task-done checkbox-icon' name='done' $checkedStatus />";
+            echo "<input type='hidden' name='task_id' value='" . $row['id'] . "' />";
+            echo "<span class='task-description $checkedClass'>" . $row['text'] . "</span>";
+            echo "<span class='task-date'>$prettyDate</span>";
+            echo "<button type='submit' class='task-delete material-icon'>backspace</button>";
+            echo "</li>";
+            echo "</form>";
         }
-    } else {
+      } else {
         echo "<li>No tasks found.</li>";
-    }
+      }
     ?>
 </ul>
   <form class="form-create-task" action="actions/create_action.php" method="post">

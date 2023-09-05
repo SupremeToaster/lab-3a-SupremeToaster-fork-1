@@ -7,7 +7,9 @@ include 'actions/db_connection.php';  // Adjust the path as needed
 
 // Fetch tasks from the database
 $user_id = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT * FROM tasks WHERE user_id = :user_id");
+$sortQuery = isset($_GET['sort']) ? "ORDER BY date ASC" : "";
+$query = "SELECT * FROM tasks WHERE user_id = :user_id $sortQuery";
+$stmt = $conn->prepare($query);
 $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -30,7 +32,11 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <a href="actions/logout_action.php">Log Out</a>
   </nav>
   <h1>My To-Do List</h1>
-  <input type="checkbox" class="toggle-switch" id="cb-sort" /><label for="cb-sort">Sort by date</label>
+  <form action="index.php" method="get">
+  <input type="checkbox" class="toggle-switch" id="cb-sort" name="sort" <?php if (isset($_GET['sort'])) echo 'checked'; ?> />
+  <label for="cb-sort">Sort by date</label>
+  <button type="submit" style="display:none;"></button>
+  </form>
   <input type="checkbox" class="toggle-switch" id="cb-filter" /><label for="cb-filter">Filter completed tasks</label>
   <ul id="taskContainer" class="tasklist">
     <?php

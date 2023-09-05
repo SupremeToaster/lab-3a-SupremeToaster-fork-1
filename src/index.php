@@ -58,8 +58,6 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   <button type="submit" style="display:none;"></button>
   </form>
-
-
   <?php
     // Display the tasks
     echo "<ul class='task-list'>";

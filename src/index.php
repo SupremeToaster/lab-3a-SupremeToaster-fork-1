@@ -46,7 +46,6 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $checkedClass = $row['done'] ? "task-checked" : "";
             $prettyDate = date("Y-m-d", strtotime($row['date']));
             echo "<form action='actions/update_action.php' method='post'>";
-            echo "<li class='task'>";
             echo "<input type='checkbox' class='task-done checkbox-icon' name='done' $checkedStatus />";
             echo "<input type='hidden' name='task_id' value='" . $row['id'] . "' />";
             echo "<span class='task-description $checkedClass'>" . $row['text'] . "</span>";
@@ -58,8 +57,6 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             echo "</form>";
             
             echo "</li>";
-            echo "</form>";
-            
         }
       } else {
         echo "<li>No tasks found.</li>";

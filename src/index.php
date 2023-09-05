@@ -51,7 +51,12 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             echo "<input type='hidden' name='task_id' value='" . $row['id'] . "' />";
             echo "<span class='task-description $checkedClass'>" . $row['text'] . "</span>";
             echo "<span class='task-date'>$prettyDate</span>";
+
+            echo "<form action='actions/delete_action.php' method='post'>";
+            echo "<input type='hidden' name='task_id' value='" . $row['id'] . "' />";
             echo "<button type='submit' class='task-delete material-icon'>backspace</button>";
+            echo "</form>";
+
             echo "</li>";
             echo "</form>";
         }

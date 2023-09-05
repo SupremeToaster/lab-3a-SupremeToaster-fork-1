@@ -26,7 +26,7 @@ h1 {
   font-family: sans-serif;
 }
 
-form {
+.general-form {
   background-color: var(--background);
   padding: 20px;
   border-top-style: groove;
@@ -287,15 +287,16 @@ input.toggle-switch:checked:after {
 }
 
 .task-row {
-  display: flex;
-  align-items: center;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
 }
 
 .task-update-form,
 .task-delete-form {
-  display: inline-block;
-}
-
-.task-update-form {
-  flex-grow: 1;
+  display: inline-block !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }

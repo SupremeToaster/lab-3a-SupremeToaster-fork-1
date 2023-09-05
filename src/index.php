@@ -72,18 +72,32 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             echo "<div class='task-row'>";  // New div for inline forms
 
             // Update form
-            echo "<form class='task-update-form' action='actions/update_action.php' method='post'>";
+            echo "<form action='actions/update_action.php' method='post'>";
+            if (isset($_GET['sort'])) {
+                echo "<input type='hidden' name='sort' value='on' />";
+            }
+            if (isset($_GET['filter'])) {
+                echo "<input type='hidden' name='filter' value='on' />";
+            }
             echo "<input type='checkbox' class='task-done checkbox-icon' name='done' $checkedStatus onclick='this.form.submit()' />";
             echo "<input type='hidden' name='task_id' value='" . $row['id'] . "' />";
             echo "<span class='task-description $checkedClass'>" . $row['text'] . "</span>";
             echo "</form>";
+            
 
             // Delete form
-            echo "<form class='task-delete-form' action='actions/delete_action.php' method='post'>";
+            echo "<form action='actions/delete_action.php' method='post'>";
+            if (isset($_GET['sort'])) {
+                echo "<input type='hidden' name='sort' value='on' />";
+            }
+            if (isset($_GET['filter'])) {
+                echo "<input type='hidden' name='filter' value='on' />";
+            }
             echo "<span class='task-date'>$prettyDate</span>";
             echo "<input type='hidden' name='task_id' value='" . $row['id'] . "' />";
             echo "<button type='submit' class='task-delete material-icon'>backspace</button>";
             echo "</form>";
+            
 
             echo "</div>";  // Close div for inline forms
             echo "</li>";
@@ -94,7 +108,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo "</ul>";
   ?>
 
-  <form class="form-create-task" action="actions/create_action.php" method="post">
+  <form class="general-form form-create-task" action="actions/create_action.php" method="post">
     <input type="text" name="text" required class="my-input" /><br>
     <input type="date" name="date" required class="my-input" /><br>
     <button class="button-styled">Create Task</button><br>

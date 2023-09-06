@@ -1,7 +1,10 @@
 <?php
 // Start session
 session_start();
-
+if (!isset($_SESSION['user_id'])) {
+  header("Location: views/login.php");
+  exit;
+}
 // Include the database connection file
 include 'actions/db_connection.php';  // Adjust the path as needed
 
